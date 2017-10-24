@@ -20,28 +20,37 @@ class Survey
 {
 
     /**
-     * @var \DirectoryIterator
+     * @var \FilesystemIterator
      */
     protected $_directoryIterator;
 
-    public function __construct( \DirectoryIterator $directory )
+    public function __construct( \FilesystemIterator $directory )
     {
-        $this->_directoryIterator = $directory;
+        $this->setDirectoryIterator($directory);
+    }
+
+    public function findAll() {
+        /** @var \SplFileInfo $file */
+        $entries = [];
+        foreach ( $this->getDirectoryIterator() as $file) {
+            $entries[$file->getFilename()] = json_decode( file_get_contents( $file->getPath() . DIRECTORY_SEPARATOR . $file->getFilename()), true);
+        }
+        return $entries;
     }
 
     /**
-     * @return \DirectoryIterator
+     * @return \FilesystemIterator
      */
-    public function getDirectoryIterator(): \DirectoryIterator
+    public function getDirectoryIterator(): \FilesystemIterator
     {
         return $this->_directoryIterator;
     }
 
     /**
-     * @param \DirectoryIterator $directoryIterator
+     * @param \FilesystemIterator $directoryIterator
      * @return Survey
      */
-    public function setDirectoryIterator(\DirectoryIterator $directoryIterator): Survey
+    public function setDirectoryIterator(\FilesystemIterator $directoryIterator): Survey
     {
         $this->_directoryIterator = $directoryIterator;
         return $this;

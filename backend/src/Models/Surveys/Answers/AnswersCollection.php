@@ -20,5 +20,5 @@ use IWD\JOBINTERVIEW\Models\CollectionAbstract;
 
 class AnswersCollection extends CollectionAbstract
 {
-
+    protected $_methodForKey = "getQuestionId";
 }

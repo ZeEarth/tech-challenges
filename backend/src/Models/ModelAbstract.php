@@ -13,10 +13,42 @@
  * Time: 01:39
  */
 
-namespace Models;
+namespace IWD\JOBINTERVIEW\Models;
 
 
-class ModelAbstract
+Abstract class ModelAbstract
 {
 
+    protected $_id = null;
+
+    public function __construct( $options = [])
+    {
+        if (is_array($options) ) {
+            $this->_setOptions($options);
+        }
+        $this->_id = uniqid();
+    }
+
+    protected function _setOptions($options) {
+        foreach ($options as $property => $value ) {
+            /**
+             * @todo : implement a mapping between storage and model
+             */
+            $method = "set" . ucfirst($property);
+            if ( method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
+    }
+
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    public function setId($id) {
+        $this->_id = $id;
+    }
+
+    abstract public function getArrayCopy();
 }

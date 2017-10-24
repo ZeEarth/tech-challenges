@@ -18,5 +18,17 @@ namespace IWD\JOBINTERVIEW\Models\Aggregate;
 
 class Date
 {
+    protected $_aggregate = [];
 
+    public function aggregateData($options, $answer ) {
+        array_push($this->_aggregate, $answer);
+    }
+
+    public function getFormatedAggregate() {
+        return $this->getAggregate();
+    }
+
+    public function getAggregate() {
+        return $this->_aggregate;
+    }
 }

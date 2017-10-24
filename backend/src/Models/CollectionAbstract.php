@@ -19,7 +19,20 @@ namespace IWD\JOBINTERVIEW\Models;
 class CollectionAbstract implements \Countable, \Iterator, \ArrayAccess
 {
 
+    protected $_methodForKey = "getId";
+
     protected $_items = [];
+
+    public function toArray() {
+        $collectionAsArray = [];
+        /** @var ModelAbstract $item */
+        foreach ( $this->_items as $item ) {
+            if ( method_exists($item, "getArrayCopy") ) {
+                $collectionAsArray[$item->{$this->_methodForKey}()] = $item->getArrayCopy();
+            }
+        }
+        return $collectionAsArray;
+    }
 
     /**
      * @param $object
@@ -94,12 +107,12 @@ class CollectionAbstract implements \Countable, \Iterator, \ArrayAccess
     /**
      * Move forward to next element
      * @link http://php.net/manual/en/iterator.next.php
-     * @return void Any returned value is ignored.
+     * @return ModelAbstract.
      * @since 5.0.0
      */
     public function next()
     {
-        next($this->_items);
+        return next($this->_items);
     }
 
     /**
@@ -128,12 +141,12 @@ class CollectionAbstract implements \Countable, \Iterator, \ArrayAccess
     /**
      * Rewind the Iterator to the first element
      * @link http://php.net/manual/en/iterator.rewind.php
-     * @return void Any returned value is ignored.
+     * @return ModelAbstract
      * @since 5.0.0
      */
     public function rewind()
     {
-        reset($this->_items);
+        return reset($this->_items);
     }
 
     /**

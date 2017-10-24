@@ -16,7 +16,9 @@
 namespace IWD\JOBINTERVIEW\Models\Surveys\Questions;
 
 
-class Question
+use IWD\JOBINTERVIEW\Models\ModelAbstract;
+
+class Question extends ModelAbstract
 {
     protected $_type;
 
@@ -76,5 +78,15 @@ class Question
     {
         $this->_options = $options;
         return $this;
+    }
+
+    public function getArrayCopy() {
+        $arrayCopy = [
+            'id' => $this->getId(),
+            'type' => $this->getType(),
+            'label' => $this->getLabel(),
+            'options' => $this->getOptions(),
+        ];
+        return $arrayCopy;
     }
 }

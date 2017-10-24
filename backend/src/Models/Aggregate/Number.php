@@ -19,4 +19,20 @@ namespace IWD\JOBINTERVIEW\Models\Aggregate;
 class Number
 {
 
+    protected $_aggregate = [];
+
+    public function aggregateData($options, $answer ) {
+       array_push($this->_aggregate, $answer);
+    }
+
+    public function getFormatedAggregate() {
+        $formated = array_sum($this->getAggregate()) / count($this->getAggregate());
+        $formatter = new \NumberFormatter('fr-FR', \NumberFormatter::DECIMAL);
+        return $formatter->format($formated);
+    }
+
+    public function getAggregate() {
+        return $this->_aggregate;
+    }
+
 }
