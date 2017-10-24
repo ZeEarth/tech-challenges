@@ -23,16 +23,19 @@ use Symfony\Component\HttpFoundation\Request;
 class Description extends Route
 {
 
-    public function home ( Request $request, Application $app ) {
+    public function home(Request $request, Application $app)
+    {
         $services = [];
-        if (isset($app['services']) ) {
-            foreach ($app['services'] as $serviceName => $serviceOptions ) {
+        if (isset($app['services'])) {
+            foreach ($app['services'] as $serviceName => $serviceOptions) {
                 $className = __NAMESPACE__ . "\\Services\\" . ucfirst($serviceName);
-                if ( class_exists($className) ) {
+                if (class_exists($className)) {
                     $serviceOptions = (array)$serviceOptions;
-                    /** @var ServicesAbstract $service */
-                    $service = new $className($serviceOptions);
-                    array_push($services, $service->getArrayCopy());
+                    foreach ($serviceOptions as $options) {
+                        /** @var ServicesAbstract $service */
+                        $service = new $className($options);
+                        array_push($services, $service->getArrayCopy());
+                    }
                 }
             }
         }

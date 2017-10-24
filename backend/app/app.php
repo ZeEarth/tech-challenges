@@ -24,12 +24,32 @@ ExceptionHandler::register();
 
 $app['services'] = [
     'surveys' => [
-        'name' => 'Surveys',
-        'endpoint' => '/surveys/{code}',
-        'description' => 'Survey service',
-        'version' => '1',
-        'allowedMethods' => [
-            'GET',
+        [
+            'name' => 'Surveys',
+            'endpoint' => '/surveys',
+            'description' => 'Survey service',
+            'version' => '1',
+            'allowedMethods' => [
+                'GET',
+            ],
+        ],
+        [
+            'name' => 'Surveys Details',
+            'endpoint' => '/surveys/details?code=XXX',
+            'descriptions' => 'Get detailed surveys with all questions and answers - You can filter result by using Query params "code"',
+            'version' => 1,
+            'allowedMethods' => [
+                'GET',
+            ]
+        ],
+        [
+            'name' => 'Surveys Aggregate Datas',
+            'endpoint' => '/surveys/aggregate?code=XXX',
+            'descriptions' => 'Get surveys with aggregate datas - You can filter result by using Query params "code"',
+            'version' => 1,
+            'allowedMethods' => [
+                'GET',
+            ]
         ],
     ],
 ];

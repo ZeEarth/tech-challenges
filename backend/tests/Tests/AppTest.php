@@ -63,6 +63,7 @@ class AppTest extends WebTestCase
             ['/surveys/details?code=XX2&test=test'],
             ['/surveys/details?test=test'],
             ['/surveys/aggregate'],
+            ['/surveys/aggregate?code=XX2'],
         ];
     }
 }
